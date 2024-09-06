@@ -10,7 +10,8 @@ export class RecipeService {
   recipesChanged = new Subject<Recipe[]>
   private recipes: Recipe[] = [
     new Recipe('Pizza', 'Tasty pizza', 'https://t.ly/gCe7k', [new Ingredient('Cheese', 1)]),
-    new Recipe('Burger', 'Fat burger', 'https://t.ly/aPns7', [new Ingredient('Meat', 1), new Ingredient('Buns', 2)])
+    new Recipe('Burger', 'Fat burger', 'https://t.ly/aPns7', [new Ingredient('Meat', 1), new Ingredient('Buns', 2)]),
+    new Recipe('Spaghetti', 'Tasty spaghetti', 'http://surl.li/dwdmng', [new Ingredient('Spaghetti', 10)])
   ]
 
   constructor(private shoppingListService: ShoppingListService) {
