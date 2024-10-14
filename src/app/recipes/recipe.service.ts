@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 
 import { Recipe } from "./recipe.model";
 import { Ingredient } from "../shared/ingredient.model";
@@ -6,15 +6,11 @@ import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Subject } from "rxjs";
 
 @Injectable()
-export class RecipeService implements OnInit {
+export class RecipeService {
   recipesChanged = new Subject<Recipe[]>
   private recipes: Recipe[] = []
 
   constructor(private shoppingListService: ShoppingListService) {
-  }
-
-  ngOnInit() {
-    this.getRecipes();
   }
 
   setRecipes(recipes: Recipe[]) {
