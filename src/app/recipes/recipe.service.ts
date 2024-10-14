@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 
 import { Recipe } from "./recipe.model";
 import { Ingredient } from "../shared/ingredient.model";
@@ -6,15 +6,15 @@ import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Subject } from "rxjs";
 
 @Injectable()
-export class RecipeService {
+export class RecipeService implements OnInit {
   recipesChanged = new Subject<Recipe[]>
-  private recipes: Recipe[] = [
-    new Recipe('Pizza', 'Tasty pizza', 'https://t.ly/gCe7k', [new Ingredient('Cheese', 1)]),
-    new Recipe('Burger', 'Fat burger', 'https://t.ly/aPns7', [new Ingredient('Meat', 1), new Ingredient('Buns', 2)]),
-    new Recipe('Spaghetti', 'Tasty spaghetti', 'http://surl.li/dwdmng', [new Ingredient('Spaghetti', 10)])
-  ]
+  private recipes: Recipe[] = []
 
   constructor(private shoppingListService: ShoppingListService) {
+  }
+
+  ngOnInit() {
+    this.getRecipes();
   }
 
   setRecipes(recipes: Recipe[]) {
