@@ -11,6 +11,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 export class AuthComponent {
   destroyRef = inject(DestroyRef);
   isLoginMode = true;
+  isLoading = false;
+  error: string = null;
 
   constructor(private authService: AuthService) {
   }
@@ -26,6 +28,7 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
 
+    this.isLoading = true;
     if (this.isLoginMode) {
       //...
     } else {
@@ -36,9 +39,12 @@ export class AuthComponent {
         .subscribe({
           next: (resData) => {
             console.log(resData);
+            this.isLoading = false;
           },
-          error: (error) => {
-            console.log(error);
+          error: (errorMessage) => {
+            console.log(errorMessage);
+            this.error = errorMessage;
+            this.isLoading = false;
           }
         });
     }
