@@ -28,7 +28,10 @@ import {
   RecipeEditComponent
 } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from "./recipes/recipe.service";
-import { HttpClientModule } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi
+} from "@angular/common/http";
 import { AuthComponent } from "./auth/auth.component";
 import { LoaderComponent } from './shared/loader/loader.component';
 
@@ -48,14 +51,11 @@ import { LoaderComponent } from './shared/loader/loader.component';
     RecipeEditComponent,
     LoaderComponent
   ],
-  imports: [
-    BrowserModule,
+  bootstrap: [AppComponent],
+  imports: [BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [ShoppingListService, RecipeService],
-  bootstrap: [AppComponent]
+    AppRoutingModule],
+  providers: [ShoppingListService, RecipeService, provideHttpClient(withInterceptorsFromDi())]
 })
 export class AppModule { }
