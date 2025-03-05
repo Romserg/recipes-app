@@ -6,7 +6,8 @@ import { RecipeService } from "../recipe.service";
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: ['./recipe-edit.component.css'],
+  standalone: false
 })
 export class RecipeEditComponent implements OnInit {
   id: number;
@@ -29,7 +30,7 @@ export class RecipeEditComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.editMode = !!params['id'] ?? false;
+          this.editMode = !!params['id'];
           this.initForm();
         }
       )

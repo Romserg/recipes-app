@@ -5,7 +5,8 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-auth",
-  templateUrl: "./auth.component.html"
+  templateUrl: "./auth.component.html",
+  standalone: false
 })
 
 export class AuthComponent {
