@@ -33,7 +33,7 @@ export class AuthComponent {
     if (this.isLoginMode) {
       //...
     } else {
-      this.authService.singup(email, password)
+      this.authService.singUp(email, password)
         .pipe(
           takeUntilDestroyed(this.destroyRef)
         )

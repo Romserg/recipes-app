@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { catchError, throwError } from "rxjs";
+import { environment } from "../../environments/environment";
 
 interface AuthResponseData {
   idToken: string;
@@ -17,8 +18,8 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  singup(email: string, password: string) {
-    const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDIPx6E6NiZ5G_lHJk3ICwsjh99aCqMd8o';
+  singUp(email: string, password: string) {
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebaseApiKey}`;
     const body = {
       email,
       password,
