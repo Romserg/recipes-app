@@ -1,7 +1,7 @@
-import { Component, DestroyRef, inject } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "./auth.service";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { AuthResponseData, AuthService } from "./auth.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-auth",
@@ -10,7 +10,6 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 })
 
 export class AuthComponent {
-  destroyRef = inject(DestroyRef);
   isLoginMode = true;
   isLoading = false;
   error: string = null;
@@ -29,26 +28,27 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
 
+    let authObs: Observable<AuthResponseData>;
+
     this.isLoading = true;
+
     if (this.isLoginMode) {
-      //...
+      authObs = this.authService.login(email, password)
     } else {
-      this.authService.singUp(email, password)
-        .pipe(
-          takeUntilDestroyed(this.destroyRef)
-        )
-        .subscribe({
-          next: (resData) => {
-            console.log(resData);
-            this.isLoading = false;
-          },
-          error: (errorMessage) => {
-            console.log(errorMessage);
-            this.error = errorMessage;
-            this.isLoading = false;
-          }
-        });
+      authObs = this.authService.singUp(email, password)
     }
+
+    authObs.subscribe({
+      next: (resData) => {
+        console.log(resData);
+        this.isLoading = false;
+      },
+      error: (errorMessage) => {
+        console.log(errorMessage);
+        this.error = errorMessage;
+        this.isLoading = false;
+      }
+    });
 
     form.reset();
   }
