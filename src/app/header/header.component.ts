@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { DataStorageService } from "../shared/data-storage.service";
+import { AuthService } from "../auth/auth.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-header',
@@ -8,10 +10,21 @@ import { DataStorageService } from "../shared/data-storage.service";
   standalone: false
 })
 export class HeaderComponent implements OnInit {
-  constructor(private dataStorageService: DataStorageService) {
+  isAuthenticated = false;
+  destroyRef = inject(DestroyRef)
+
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit() {
+    this.authService.user
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(user => {
+        this.isAuthenticated = !!user;
+      })
     // this.onFetchData();
   }
 
