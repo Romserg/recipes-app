@@ -29,11 +29,13 @@ import {
 } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from "./recipes/recipe.service";
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi
 } from "@angular/common/http";
 import { AuthComponent } from "./auth/auth.component";
 import { LoaderComponent } from './shared/loader/loader.component';
+import { AuthInterceptorService } from "./auth/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -56,6 +58,15 @@ import { LoaderComponent } from './shared/loader/loader.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule],
-  providers: [ShoppingListService, RecipeService, provideHttpClient(withInterceptorsFromDi())]
+  providers: [
+    ShoppingListService,
+    RecipeService,
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ]
 })
 export class AppModule { }
