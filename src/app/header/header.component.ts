@@ -24,8 +24,11 @@ export class HeaderComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(user => {
         this.isAuthenticated = !!user;
+
+        if (this.isAuthenticated) {
+          this.onFetchData();
+        }
       })
-    // this.onFetchData();
   }
 
   onLogout() {
