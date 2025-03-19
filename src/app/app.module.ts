@@ -36,6 +36,7 @@ import {
 import { AuthComponent } from "./auth/auth.component";
 import { LoaderComponent } from './shared/loader/loader.component';
 import { AuthInterceptorService } from "./auth/auth-interceptor.service";
+import { AlertComponent } from "./shared/alert/alert.component";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,7 @@ import { AuthInterceptorService } from "./auth/auth-interceptor.service";
   imports: [BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule],
+    AppRoutingModule, AlertComponent],
   providers: [
     ShoppingListService,
     RecipeService,
