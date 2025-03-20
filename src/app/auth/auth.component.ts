@@ -1,8 +1,16 @@
-import { Component } from "@angular/core";
+import {
+  Component,
+  DestroyRef,
+  inject,
+  ViewChild,
+  ViewContainerRef
+} from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthResponseData, AuthService } from "./auth.service";
 import { Observable } from "rxjs";
+import { AlertComponent } from "../shared/alert/alert.component";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-auth",
@@ -11,9 +19,12 @@ import { Observable } from "rxjs";
 })
 
 export class AuthComponent {
+  destroyRef = inject(DestroyRef);
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  @ViewChild('container', { read: ViewContainerRef })
+  container: ViewContainerRef;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -52,10 +63,20 @@ export class AuthComponent {
       error: (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
+        this.showErrorAlert(errorMessage)
         this.isLoading = false;
       }
     });
 
     form.reset();
+  }
+
+  private showErrorAlert(error: string) {
+    this.container.clear();
+    const componentRef = this.container.createComponent(AlertComponent);
+    componentRef.instance.message = error;
+    componentRef.instance.close
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.container.clear());
   }
 }

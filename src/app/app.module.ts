@@ -36,7 +36,6 @@ import {
 import { AuthComponent } from "./auth/auth.component";
 import { LoaderComponent } from './shared/loader/loader.component';
 import { AuthInterceptorService } from "./auth/auth-interceptor.service";
-import { AlertComponent } from "./shared/alert/alert.component";
 
 @NgModule({
   declarations: [
@@ -55,10 +54,12 @@ import { AlertComponent } from "./shared/alert/alert.component";
     LoaderComponent
   ],
   bootstrap: [AppComponent],
-  imports: [BrowserModule,
+  imports: [
+    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule, AlertComponent],
+    AppRoutingModule
+  ],
   providers: [
     ShoppingListService,
     RecipeService,
@@ -70,4 +71,5 @@ import { AlertComponent } from "./shared/alert/alert.component";
     }
   ]
 })
-export class AppModule { }
+export class AppModule {
+}
