@@ -23,7 +23,7 @@ export class AuthComponent {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
-  @ViewChild('container', { read: ViewContainerRef })
+  @ViewChild('dynamicComponent', { read: ViewContainerRef })
   container: ViewContainerRef;
 
   constructor(private authService: AuthService, private router: Router) {
